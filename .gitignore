@@ -231,3 +231,5 @@ examples/celle_example_v1/runs
 examples/celle_example_v1/config/osm.motorcycle.trips.xml
 examples/celle_example_v1/config/osm.passenger.trips.xml
 examples/celle_example_v1/config/osm.truck.trips.xml
+
+examples/celle_example_v1/processed
