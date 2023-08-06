@@ -1,4 +1,4 @@
-import libsumo
+import traci
 
 
 class translation_generator:
@@ -30,10 +30,10 @@ class translation_generator:
         self._detector_to_index_buffer = dict()
         self._index_to_detector_buffer = dict()
 
-        traffic_light_ids = libsumo.trafficlight.getIDList()
+        traffic_light_ids = traci.trafficlight.getIDList()
 
         curr_index: int = 0
-        for detector_id in libsumo.inductionloop.getIDList():
+        for detector_id in traci.inductionloop.getIDList():
             # filter out detectors created by traffic light systems
             # as they do not actively collect data
             if not any(t in detector_id for t in traffic_light_ids):

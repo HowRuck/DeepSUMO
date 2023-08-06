@@ -1,7 +1,7 @@
 from simulation.modules.sim_module import simulation_module
 from manager.data_manager import data_manager
 from matplotlib import pyplot as plt
-import libsumo
+import traci
 
 
 class road_visualization_module(simulation_module):
@@ -33,7 +33,7 @@ class road_visualization_module(simulation_module):
         graphs = int(data_manager._settings["total_graphs"])
 
         translation_controller = data_manager.translation
-        lane_id = libsumo.inductionloop.getLaneID(self.original_id)
+        lane_id = traci.inductionloop.getLaneID(self.original_id)
         edge = data_manager.net.getLane(lane_id).getEdge()
 
         print("Plotting (probably only a section of)", edge.getName())

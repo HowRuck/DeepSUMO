@@ -3,7 +3,7 @@ import networkx as nx
 import sumolib
 import numpy as np
 from controllers.translation_controller import translation_controller
-import libsumo
+import traci
 
 
 class detector_graph_controller:
@@ -48,7 +48,7 @@ class detector_graph_controller:
         """
         ref_speeds: dict[str, float] = {}
         for node in self._detector_graph:
-            lane_id = libsumo.inductionloop.getLaneID(node)
+            lane_id = traci.inductionloop.getLaneID(node)
             ref_speed = self._net.getLane(lane_id).getSpeed()
             ref_speeds[node] = ref_speed
 

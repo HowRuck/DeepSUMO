@@ -1,7 +1,7 @@
 from manager.data_manager import data_manager
 from generator.detector_node_connector import detector_connector_strategy
 from simulation.modules.sim_module import simulation_module
-import libsumo
+import traci
 
 
 class simulation_core:
@@ -35,7 +35,7 @@ class simulation_core:
                 self._sumoCmd.append(arg)
 
         # start SUMO and initialize data manager
-        libsumo.start(self._sumoCmd)
+        traci.start(self._sumoCmd)
         self._data = data_manager(settings, strategy)
 
     def start_simulation(self):
@@ -54,7 +54,7 @@ class simulation_core:
 
     def stop_simulation(self):
         """ Stop the simulation and close TraCi connection"""
-        libsumo.close()
+        traci.close()
 
     def _go_simulation_step(self):
         """ Perform one simulation step including all aspects
@@ -62,7 +62,7 @@ class simulation_core:
         """
 
         # go SUMO simulation step
-        libsumo.simulationStep()
+        traci.simulationStep()
 
         # check if data should be collected, and collect data if needed
         if (self._curr_sim_step % int(self._settings["interval_length"]) == 0 and

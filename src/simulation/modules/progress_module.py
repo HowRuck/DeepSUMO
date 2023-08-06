@@ -1,7 +1,7 @@
 from simulation.modules.sim_module import simulation_module
 from manager.data_manager import data_manager
 import time
-import libsumo
+import traci
 
 
 class progress_module(simulation_module):
@@ -40,9 +40,9 @@ class progress_module(simulation_module):
 
             # print metrics
             print("-----", self.curr_percentage_step, "% -----")
-            print("sim_step:", libsumo.simulation.getTime())
+            print("sim_step:", traci.simulation.getTime())
             print("last_sim_time:", round((curr_time - self.last_time), 2), "seconds")
-            print("scale:", libsumo.simulation.getScale())
+            print("scale:", traci.simulation.getScale())
             print("ETA:", round(((avg_time * (100 - self.curr_percentage_step)) / 60), 2), "minutes")
         # update internal variables
         self.curr_percentage_step += 1

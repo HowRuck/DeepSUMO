@@ -1,6 +1,6 @@
 import utils.mathstuff as ma
 import numpy as np
-import libsumo
+import traci
 import sumolib
 import controllers.translation_controller as tr
 
@@ -49,18 +49,18 @@ class dijkstra_connector_strategy(detector_connector_strategy):
         :param net: sumolib net object
         :return: cost between both detectors as float
         """
-        edge_a = net.getLane(libsumo.inductionloop
+        edge_a = net.getLane(traci.inductionloop
                              .getLaneID(detector_a_id)).getEdge()
-        edge_b = net.getLane(libsumo.inductionloop
+        edge_b = net.getLane(traci.inductionloop
                              .getLaneID(detector_b_id)).getEdge()
 
         # get dijkstra result between both edges
         _, dijkstra_cost = net.getFastestPath(edge_a, edge_b)
         # adjust result according to eq. 3
         dijkstra_cost_adjusted = dijkstra_cost - \
-            libsumo.inductionloop.getPosition(detector_a_id) / edge_a.getSpeed() - \
+            traci.inductionloop.getPosition(detector_a_id) / edge_a.getSpeed() - \
                  (edge_b.getLength() -
-                   libsumo.inductionloop.getPosition(detector_b_id)) / edge_b.getSpeed()
+                   traci.inductionloop.getPosition(detector_b_id)) / edge_b.getSpeed()
 
         return dijkstra_cost_adjusted
 
@@ -79,14 +79,14 @@ class distance_connector_strategy(detector_connector_strategy):
         :param net: sumolib net object
         :return: cost between both detectors as float
         """
-        lane_a = net.getLane(libsumo.inductionloop.getLaneID(detector_a_id))
-        lane_b = net.getLane(libsumo.inductionloop.getLaneID(detector_b_id))
+        lane_a = net.getLane(traci.inductionloop.getLaneID(detector_a_id))
+        lane_b = net.getLane(traci.inductionloop.getLaneID(detector_b_id))
 
         # get individual positions of the detector using eq. 2 and eq. 1
         pos_a = ma.get_position_from_shape(lane_a.getShape(),
-                                           libsumo.inductionloop.getPosition(detector_a_id))
+                                           traci.inductionloop.getPosition(detector_a_id))
         pos_b = ma.get_position_from_shape(lane_b.getShape(),
-                                           libsumo.inductionloop.getPosition(detector_b_id))
+                                           traci.inductionloop.getPosition(detector_b_id))
 
         # return distance between both positions calculated using eq. 1
         return ma.get_distance_between(pos_a, pos_b)

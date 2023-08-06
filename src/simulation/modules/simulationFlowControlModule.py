@@ -2,7 +2,7 @@ from simulation.modules.sim_module import simulation_module
 from manager.data_manager import data_manager
 import random
 from datetime import datetime, timedelta
-import libsumo
+import traci
 
 
 class simulationFlowControlModule(simulation_module):
@@ -81,7 +81,7 @@ class simulationFlowControlModule(simulation_module):
         the "current" time and weekday
         :param manager: data manager of DeppSUMO
         """
-        sec = int(libsumo.simulation.getTime())
+        sec = int(traci.simulation.getTime())
         curr = self._start + timedelta(seconds=sec)
 
         def in_between(interval: tuple[tuple[int, int], tuple[int, int]], curr: tuple[int, int]):
@@ -115,7 +115,7 @@ class simulationFlowControlModule(simulation_module):
                 random_min, random_max = self.flow_laws[curr_interval]
                 new_flow = self.flow_laws[curr_interval]
                 new_scale = random.uniform(random_min, random_max)
-                libsumo.simulation.setScale(new_scale)
+                traci.simulation.setScale(new_scale)
                 break
 
         # print visualisation output

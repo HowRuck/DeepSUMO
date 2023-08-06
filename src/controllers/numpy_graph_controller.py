@@ -1,4 +1,4 @@
-import libsumo
+import traci
 import networkx as nx
 from controllers.translation_controller import translation_controller
 from store.numpy_graph_store import numpy_graph_store
@@ -34,20 +34,20 @@ class numpy_graph_controller:
         for detector_id in self._processing_order:
             tmp = []
             # collect speed from SUMO
-            speed = libsumo.inductionloop.getLastIntervalMeanSpeed(detector_id)
+            speed = traci.inductionloop.getLastIntervalMeanSpeed(detector_id)
             # if no speed was recorded (= no car passed the detector)
             # use the speed limit
             if speed == -1.0:
                 speed = self._reference_speeds[detector_id]
                 tmp.append(speed)
             else:
-                vehicle_mean_speed = libsumo.inductionloop\
+                vehicle_mean_speed = traci.inductionloop\
                     .getLastIntervalMeanSpeed(detector_id)
                 ref_speed = self._reference_speeds[detector_id]
                 # adjust occupancy value according to eq. 4
-                vehicle_occupancy = libsumo.inductionloop\
+                vehicle_occupancy = traci.inductionloop\
                     .getLastIntervalOccupancy(detector_id) / \
-                    libsumo.inductionloop.getLastIntervalVehicleNumber(detector_id)
+                    traci.inductionloop.getLastIntervalVehicleNumber(detector_id)
                 if vehicle_occupancy >= 1.0:
                     vehicle_occupancy = 1.0
                 # calculate final speed according to eq. 5
@@ -57,8 +57,8 @@ class numpy_graph_controller:
                 tmp.append(final_speed)
 
             # collect and append other node features
-            tmp.append(libsumo.inductionloop.getLastIntervalOccupancy(detector_id))
-            tmp.append(libsumo.inductionloop.getLastIntervalVehicleNumber(detector_id))
+            tmp.append(traci.inductionloop.getLastIntervalOccupancy(detector_id))
+            tmp.append(traci.inductionloop.getLastIntervalVehicleNumber(detector_id))
 
             feature_list.append(tmp)
             cnt += 1
