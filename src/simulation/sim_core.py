@@ -29,7 +29,7 @@ class simulation_core:
 
         # assemble SUMO start command
         self._sumoCmd = [self._settings["sumo_exec_path"], "-c", self._settings["sumo_config_path"], "--no-warnings",
-                         "true", "--device.rerouting.threads", "6"]
+                         "true"]
         if launch_arguments is not None:
             for arg in launch_arguments:
                 self._sumoCmd.append(arg)
