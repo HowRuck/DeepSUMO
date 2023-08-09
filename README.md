@@ -3,3 +3,5 @@ DeepSUMO is a library that aims to connect the traffic simulator SUMO with curre
 
 I intend to further develop this framework (and readme) if I find the time to do so. 
 An example of using the framework can be found in the example folder.
+
+A quick thank you to [Julie Wang](https://github.com/jswang), [Amelia](https://github.com/amelia22974) and [Tracy Cai](https://github.com/tracy-cai) as their implementation of the ST-GAT model is used as an example here. The original code can be found [here](https://github.com/jswang/stgat_traffic_prediction).  
